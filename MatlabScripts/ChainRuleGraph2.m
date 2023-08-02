@@ -25,7 +25,7 @@ t3 = '$y_2=f(x_1,x_2)$';
 t4 = '$y_2=f(x_1,x_2)$';
 t5 = '$\frac{\partial{z}}{\partial{x_1}}= \frac{\partial{z}}{\partial{y_1}}\frac{\partial{y_1}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_2}}\frac{\partial{y_2}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_3}}\frac{\partial{y_3}}{\partial{x_1}}$';
 
-title({t1,t2,t3,t4,t5},'interpreter','latex','fontSize',20)
+title({t1,t2,t3,t4,t5},'interpreter','latex','fontSize',30)
 h = plot(G);
 h.MarkerSize=12;
 h.NodeFontSize=40;
