@@ -1,4 +1,4 @@
-function plotEdges(nodes,edges,t)
+function ChainRulePlotEdges(nodes,edges,t)
 
     for i=1:length(edges.n1)
          

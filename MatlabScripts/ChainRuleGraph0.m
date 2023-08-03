@@ -20,11 +20,10 @@ set(gcf,'position',[0 0 1400 1000]);set(gcf,'color','w');
 hold on;box on;xticklabels({});set(gca,'XTick',[]);set(gca,'YTick',[]);
 annotation('rectangle',[0 0 1 1 ],'Color','k',LineWidth=4);
 t1 = '$z=f(x,y)$';
-t2 = '$x=f(u,v)$';
-t3 = '$y=f(u,v)$';
-t4 = '$\frac{\partial{z}}{\partial{u}}= \frac{\partial{z}}{\partial{x}}\frac{\partial{x}}{\partial{u}}+\frac{\partial{z}}{\partial{y}}\frac{\partial{y}}{\partial{u}}$';
-t5 = '$\frac{\partial{z}}{\partial{v}}= \frac{\partial{z}}{\partial{x}}\frac{\partial{x}}{\partial{v}}+\frac{\partial{z}}{\partial{y}}\frac{\partial{y}}{\partial{v}}$';
-title({t1,t2,t3,t4,t5},'interpreter','latex','fontSize',30)
+t2 = '$x,y=f(u,v)$';
+t3 = '$\frac{\partial{z}}{\partial{u}}= \frac{\partial{z}}{\partial{x}}\frac{\partial{x}}{\partial{u}}+\frac{\partial{z}}{\partial{y}}\frac{\partial{y}}{\partial{u}}$';
+t4 = '$\frac{\partial{z}}{\partial{v}}= \frac{\partial{z}}{\partial{x}}\frac{\partial{x}}{\partial{v}}+\frac{\partial{z}}{\partial{y}}\frac{\partial{y}}{\partial{v}}$';
+title({t1,t2,t3,t4},'interpreter','latex','fontSize',30)
 
 h = plot(G);
 h.MarkerSize=12;
@@ -37,9 +36,8 @@ h.ArrowSize = 30;
 h.ArrowPosition=0.75;
 h.Interpreter='latex';
 
-plotEdges(nodes,edges,0.35);
-
-exportgraphics(gcf,'imgs/chainRule.png','Resolution',300)
-exportgraphics(gcf,'imgs/chainRulee.pdf','Resolution',300,'BackgroundColor','none','ContentType','vector')
+ChainRulePlotEdges(nodes,edges,0.35)
+exportgraphics(gcf,'imgs/chainRule0.png','Resolution',300)
+%exportgraphics(gcf,'imgs/chainRulee.pdf','Resolution',300,'BackgroundColor','none','ContentType','vector')
 
 

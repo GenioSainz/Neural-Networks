@@ -20,12 +20,10 @@ set(gcf,'position',[0 0 1400 1000]);set(gcf,'color','w');
 hold on;box on;xticklabels({});set(gca,'XTick',[]);set(gca,'YTick',[]);
 annotation('rectangle',[0 0 1 1 ],'Color','k',LineWidth=4);
 t1 = '$z=f(y_1,y_2,y_3)$';
-t2 = '$y_1=f(x_1,x_2)$';
-t3 = '$y_2=f(x_1,x_2)$';
-t4 = '$y_2=f(x_1,x_2)$';
-t5 = '$\frac{\partial{z}}{\partial{x_1}}= \frac{\partial{z}}{\partial{y_1}}\frac{\partial{y_1}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_2}}\frac{\partial{y_2}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_3}}\frac{\partial{y_3}}{\partial{x_1}}$';
+t2 = '$y_1,y_2,y_3=f(x_1,x_2)$';
+t3 = '$\frac{\partial{z}}{\partial{x_1}}= \frac{\partial{z}}{\partial{y_1}}\frac{\partial{y_1}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_2}}\frac{\partial{y_2}}{\partial{x_1}}+ \frac{\partial{z}}{\partial{y_3}}\frac{\partial{y_3}}{\partial{x_1}}$';
 
-title({t1,t2,t3,t4,t5},'interpreter','latex','fontSize',30)
+title({t1,t2,t3},'interpreter','latex','fontSize',30)
 h = plot(G);
 h.MarkerSize=12;
 h.NodeFontSize=40;
@@ -37,6 +35,6 @@ h.ArrowSize = 30;
 h.ArrowPosition=0.25;
 h.Interpreter='latex';
 
-plotEdges(nodes,edges,0.7)
+ChainRulePlotEdges(nodes,edges,0.7)
 exportgraphics(gcf,'imgs/chainRule2.png','Resolution',300)
 
