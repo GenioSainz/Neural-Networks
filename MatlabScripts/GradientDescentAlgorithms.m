@@ -13,7 +13,7 @@ GD_COLOR = [0 1 0];
 nexttile(1)
     hold on;box on;grid on;daspect([1 1 1]);axis([1 n 1 n]+[-1 1 -1 1]*size);
     annotation('rectangle',[0 0 1 1 ],'Color','k',LineWidth=4)
-    title('$Batch-GradientDescent:BGD \rightarrow B_{SIZE}=X_{TRAIN}$','interpreter','latex','fontSize',txtFS)
+    title('$Batch-GradientDescent \rightarrow B_{SIZE}=X_{TRAIN}$','interpreter','latex','fontSize',txtFS)
     plotArray(n,size,'b');
     xy0 = 1-size/2-delta;
     wh  = n+delta;
@@ -22,14 +22,14 @@ nexttile(1)
 
 nexttile(3)
     hold on;box on;grid on;daspect([1 1 1]);axis([1 n 1 n]+[-1 1 -1 1]*size)
-    title('$Stochastic-GradientDescent:SGD \rightarrow B_{SIZE}=1$','interpreter','latex','fontSize',txtFS)
+    title('$Stochastic-GradientDescent \rightarrow B_{SIZE}=1$','interpreter','latex','fontSize',txtFS)
     plotArray(n,0.5,'b');
     plotArray(n,0.8,GD_COLOR);
     text(6,3,'$Updates = Epoch*X_{train}$','interpreter','latex','fontSize',txtFS)
 
 nexttile(5)
     hold on;box on;grid on;daspect([1 1 1]);axis([1 n 1 n]+[-1 1 -1 1]*size)
-    title('$MiniBatch-GradientDescent:MBGD \rightarrow B_{SIZE}>=1$','interpreter','latex','fontSize',txtFS)
+    title('$MiniBatch-GradientDescent \rightarrow B_{SIZE}>=1$','interpreter','latex','fontSize',txtFS)
     plotArray(n,0.5,'b');
     plotBach(n,0.8,GD_COLOR);
     text(6,3,'$Updates = Epoch*\frac{X_{TRAIN}}{B_{SIZE}}$','interpreter','latex','fontSize',txtFS)
