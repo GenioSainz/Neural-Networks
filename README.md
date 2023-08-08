@@ -14,11 +14,16 @@ $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths betwee
 <img src="MatlabScripts/imgs/chainRule1.png"  width="100%">
 <img src="MatlabScripts/imgs/chainRule2.png"  width="100%">
 
-
-
+<img src="MatlabScripts/imgs/net44.png"  width="100%">
+<img src="MatlabScripts/imgs/net43.png"  width="100%">
+<img src="MatlabScripts/imgs/net34.png"  width="100%">
 ## *Feed forward activations*
 
 $$a^{l}_j = \sigma \bigg( \sum_k w^l _{jk} a^{l-1}_k + b^l_j \bigg)$$
+
+$$ neurons \textrm{  } k \rightarrow \textrm{  } layer^{l-1} \rightarrow a^{l-1}$$
+
+$$ neuron \textrm{  } j \rightarrow \textrm{  } layer^{l} \rightarrow a^{l}$$
 
 ## *Feed forward activations in vectorized form*
 
@@ -53,4 +58,5 @@ $$b_l \rightarrow b_l' = b_l-\eta \frac{\partial C}{\partial b_l}$$
 $$w_k \rightarrow w_k' = w_k-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w_k}$$
 
 $$b_l \rightarrow b_l' = b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial b_l}$$
+
 
