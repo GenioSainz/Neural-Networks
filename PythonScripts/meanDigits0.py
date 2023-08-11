@@ -21,6 +21,15 @@ start = time.time()
 #      50.000           10.000     10.000 
 training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
 
+# training_data          [ ( x           , y),...         ]
+# list(training_data) => [ (array(784,1),array(10,1)), ...]
+
+# validation_data          [ ( x          , y ), ...]
+# list(validation_data) => [ (array(784,1),int), ...]
+
+# test_data          [ ( x          , y ), ...]
+# list(test_data) => [ (array(784,1),int), ...]
+
 lapse = time.time() - start
 print(f'MNIST loader: {lapse:03} seconds')
 

@@ -80,3 +80,23 @@ mini_bach = [train_set[i:i+m] for i in range(0,len(train_set),m)]
 print('mini_bach:')
 print(train_set)
 print(mini_bach)
+
+
+
+
+## without using list ,zip iterator disappears
+#################################################
+letters = ['a','b','c']
+numbers = [1,2,3]
+z       = zip(numbers ,letters)
+
+for l,n in z: print('A1',l,n)
+for l,n in z: print('A2',l,n)
+
+
+letters = ['a','b','b','d','e']
+numbers = [1,2,3,4,5]
+z       = list(zip(numbers ,letters))
+
+for l,n in z: print('B1',l,n)
+for l,n in z: print('B2',l,n)

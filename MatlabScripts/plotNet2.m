@@ -1,13 +1,14 @@
 clc;close all;clear all
  
 
-layers    = [4 3 5];
+layers    = [5 3 3];
 layersTxt = {'l-1','l','l+1'};
 dx        = 2;
 dy        = 2;
 node      = 1;
-jNeuron1  = 2;
-jNeuron2  = 3;
+jNeuron1  = 1;
+jNeuron2  = 1;
+dw        = 2;
 
 %%% NODES
 %%%%%%%%%%%%%%%%%%%%%%
@@ -56,30 +57,41 @@ for j=1:layers(2)
 
     for k=1:layers(1)
          
-        jj     = num2str(j-1);
-        kk     = num2str(k-1);
+        jj  = num2str(j-1);
+        kk  = num2str(k-1);
+        w   = [num2str(jj),num2str(kk)];
 
-        if k<layers(1)
-            newStr = ['w_{',jj,kk,'} \textrm{ }'];
-        else
-            newStr = ['w_{',jj,kk,'}'];
+        if k<layers(1) && j ~= jNeuron1
+            newStr=['w_{',w,'} &'];
+
+        elseif k==layers(1) && j~= jNeuron1
+            newStr=['w_{',w,'}'];
+
+        elseif k<layers(1) && j == jNeuron1
+             w=['\textbf{',w,'}'];
+            newStr=['\textbf{w}_{',w,'} &'];
+
+        elseif k==layers(1) && j == jNeuron1
+             w=['\textbf{',w,'}'];
+            newStr=['\textbf{w}_{',w,'}'];
         end
 
         str    = strcat(str,newStr);
     end  
-        if j<layers(2)
-        str = strcat(str,'\\');
-        end
+        
+        str = strcat(str,' \\ ');    
 end
 
-
-%%txt = '$\left(\begin{array}{cc} 1+s & 2+s\\ {\textbf{1+s}} & {\textbf{1+s}}\\ \end{array}\right)$';
-ec1 = '$W^l=\left(\begin{array}{cc}';
+cols = '';
+for i=1:layers(1)
+     cols = strcat(cols ,'c');
+end
+ec1 = ['$W^l=\left(\begin{array}{',cols,'}'];
 ec2 = ' \end{array}\right)$';
 
 str =strcat(ec1,str);
 str =strcat(str,ec2);
-text(3,min(nodes.y),str,'interpreter','latex','fontSize',20,HorizontalAlignment = 'center')
+text(3,min(nodes.y)-dw,str,'interpreter','latex','fontSize',18,HorizontalAlignment = 'center')
 
 %%% PLOT MATRIX l+1
 %%%%%%%%%%%%%%%%%%%%%%
@@ -91,7 +103,6 @@ for j=1:layers(3)
         jj  = num2str(j-1);
         kk  = num2str(k-1);
         w   = [num2str(jj),num2str(kk)];
-   
 
         if k<layers(2) && j ~= jNeuron2
             newStr=['w_{',w,'} &'];
@@ -100,25 +111,30 @@ for j=1:layers(3)
             newStr=['w_{',w,'}'];
 
         elseif k<layers(2) && j == jNeuron2
+             w=['\textbf{',w,'}'];
             newStr=['\textbf{w}_{',w,'} &'];
 
         elseif k==layers(2) && j == jNeuron2
+             w=['\textbf{',w,'}'];
             newStr=['\textbf{w}_{',w,'}'];
         end
 
         str    = strcat(str,newStr);
     end  
         
-        str = strcat(str,' \\ ');
-        
+        str = strcat(str,' \\ ');    
 end
 
-ec1 = '$W^{l+1}=\left(\begin{array}{ccc}';
+cols = '';
+for i=1:layers(2)
+     cols = strcat(cols ,'c');
+end
+ec1 = ['$W^l=\left(\begin{array}{',cols,'}'];
 ec2 = ' \end{array}\right)$';
 
 str =strcat(ec1,str);
 str =strcat(str,ec2);
-text(5,min(nodes.y),str,'interpreter','latex','fontSize',20,HorizontalAlignment = 'center')
+text(5,min(nodes.y)-dw,str,'interpreter','latex','fontSize',18,HorizontalAlignment = 'center')
 
 
 G = digraph(edges.n1, ...
@@ -126,11 +142,10 @@ G = digraph(edges.n1, ...
             edges.weights,...
             nodes.names);
 
-set(gcf,'position',[0 0 1400 800]);
+set(gcf,'position',[0 0 1400 1000]);
 set(gcf,'color','w');
 hold on;axis off;
 set(gca,'XTick',[]);set(gca,'YTick',[]);
-%annotation('rectangle',[0 0 1 1 ],'Color','k',LineWidth=4);
 
 
 h = plot(G);
@@ -144,11 +159,13 @@ h.ArrowSize = 30;
 h.ArrowPosition=0.25;
 h.Interpreter='latex';
 
+highlight(h,5,6,'EdgeColor','g')
+
 PlotNet(nodes,edges,0.5);
 
-rectangle('Position',[1.5 -6 5 12],LineWidth=0.1);
+rectangle('Position',[1.5 -8.5 5 14],LineWidth=0.1);
 
-exportgraphics(gcf,'imgs/net435.png','Resolution',300)
+%%exportgraphics(gcf,'imgs/net535_0.png','Resolution',300)
 
 function PlotNet(nodes,edges,t)
      
@@ -167,7 +184,7 @@ function PlotNet(nodes,edges,t)
         text(x,y,edges.names(i),'interpreter','latex',FontSize=24, ...
             HorizontalAlignment = 'center',...
             BackgroundColor=[1 1 1], ...
-            Color=[0 0 1]);
+            Color=[0 0 0]);
     end
 
     % nodes labels

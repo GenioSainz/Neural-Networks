@@ -64,46 +64,54 @@ $$w_k \rightarrow w_k' = w_k-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\parti
 $$b_l \rightarrow b_l' = b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial b_l}$$
 
 
-## Backpropagation Equations
+## *Backpropagation*
 
 Backpropagation compute:
 - The partial derivatives $\partial C_x/ \partial w_{jk}^l$ and $\partial C_x/ \partial b_j^l$ for a single training input. We then recover $\partial C/ \partial w_{jk}^l$ and $\partial C/ \partial b_j^l$ by averaging over training examples.
 
 - $error$ $\delta^l_j$ and then will relate  $\delta^l_j$ to $\partial C/ \partial w_{jk}^l$ and $\partial C/ \partial b_j^l$.
 
- $$
-   \delta^L_j = \frac{\partial C}{\partial z^L_{j}}
-  $$
+- Weight and Biases will learn slowly if:
+  - The input neuron is low-activation $\rightarrow a^{l-1}_k$.
+  - The output neuron has saturated $\rightarrow \sigma'(z^l)$
 
-$$ \frac{\partial C}{\partial w^L_{jk}} =  \underbrace{\frac{\partial C}{\partial a^L_{j}} 
-                                           \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
-                                           \frac{\partial z^L_{j}}{\partial w^L_{jk}}
-                                           =\delta^L_j a^{L-1}_{k}
-                                           $$
-$$ \frac{\partial C}{\partial b^L_{j}} =  \underbrace{\frac{\partial C}{\partial a^L_{j}} 
-                                           \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
-                                           \frac{\partial z^L_{j}}{\partial b^L_{j}}
-                                           =\delta^L_j
-                                           $$
+<!-- $$ \frac{\partial C}{\partial w^L_{jk}} =  
+                                              \underbrace{\frac{\partial C}{\partial a^L_{j}} 
+                                              \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
+                                              \frac{\partial z^L_{j}}{\partial w^L_{jk}}
+                                              =\delta^L_j a^{L-1}_{k}
+                                              $$
+
+$$ \frac{\partial C}{\partial b^L_{j}} =  
+                                          \underbrace{\frac{\partial C}{\partial a^L_{j}} 
+                                          \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
+                                          \frac{\partial z^L_{j}}{\partial b^L_{j}}
+                                          =\delta^L_j
+                                          $$ -->
+
+- Equations:
 
 $$
-
-\begin{align}   
-    & \delta^L_j = \frac{\partial C}{\partial a^L_j} \sigma'(z^L_j) \rightarrow \delta^L = \nabla_{a^L} C \odot \sigma'(z^L)\\
-    & \delta^l   = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)\\
-    & \frac{\partial C}{\partial b^l_j} =\delta^l_j \\
-    & \frac{\partial C}{\partial w^l_{jk}} =  a^{l-1}_k \delta^l_j
+\begin{align} 
+    & \delta^L = \frac{\partial C}{\partial z^L}\\
+    & \\  
+    & \delta^L = \nabla_{a^L} C \odot \sigma'(z^L) \\
+    & \\
+    & \delta^l   = ([W^{l+1}]^T \delta^{l+1}) \odot \sigma'(z^l) \\
+    & \\
+    & \frac{\partial C}{\partial W^l} = \delta^l [a^{l-1}]^T\\
+    & \\
+    & \frac{\partial C}{\partial b^l} =\delta^l \\
 \end{align}
-
 $$
 
+## *Gradient Descent In Matrix Form*
 
-Weight will learn slowly if:
-- The input neuron is low-activation $(4)\rightarrow a^{l-1}_k$.
-- The output neuron has saturated $(1)\rightarrow \sigma'(z^l)$
-
-
-
-
-
+$$
+\begin{align}
+ W^l & = W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
+ & \\
+ b^l & = b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
+\end{align}
+$$
 
