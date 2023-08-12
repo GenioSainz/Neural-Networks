@@ -14,7 +14,7 @@ $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths betwee
 <img src="MatlabScripts/imgs/chainRule1.png"  width="100%">
 
 
-## *Net feed forward*
+## *Net feed forward Matrix Dimensions*
 
 <img src="MatlabScripts/imgs/net535_0.png"  width="100%">
 <img src="MatlabScripts/imgs/net535_1.png"  width="100%">
@@ -67,9 +67,9 @@ $$b_l \rightarrow b_l' = b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\parti
 ## *Backpropagation*
 
 Backpropagation compute:
-- The partial derivatives $\partial C_x/ \partial w_{jk}^l$ and $\partial C_x/ \partial b_j^l$ for a single training input. We then recover $\partial C/ \partial w_{jk}^l$ and $\partial C/ \partial b_j^l$ by averaging over training examples.
+- The partial derivatives $\partial C_x/ \partial W^l$ and $\partial C_x/ \partial b^l$ for a single training input. We then recover $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$ by averaging over training examples.
 
-- $error$ $\delta^l_j$ and then will relate  $\delta^l_j$ to $\partial C/ \partial w_{jk}^l$ and $\partial C/ \partial b_j^l$.
+- $error$ $\delta^l$ and then will relate  $\delta^l$ to $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$.
 
 - Weight and Biases will learn slowly if:
   - The input neuron is low-activation $\rightarrow a^{l-1}_k$.
@@ -92,7 +92,7 @@ $$ \frac{\partial C}{\partial b^L_{j}} =
 - Equations:
 
 $$
-\begin{align} 
+\begin{align}
     & \delta^L = \frac{\partial C}{\partial z^L}\\
     & \\  
     & \delta^L = \nabla_{a^L} C \odot \sigma'(z^L) \\

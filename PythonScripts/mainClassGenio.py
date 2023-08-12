@@ -55,8 +55,9 @@ class Network():
         print("Genio Neural Network",end='\n')
         
         training_data = list(training_data)
-        n             = len(training_data)
         start_time    = time.time()
+        n             = len(training_data)
+        m             = mini_batch_size
         
         if test_data:
             test_data = list(test_data)
@@ -65,7 +66,7 @@ class Network():
         for epoch in range(epochs):
             
             random.shuffle(training_data)
-            mini_batches = [ training_data[k:k+mini_batch_size] for k in range(0, n, mini_batch_size)]
+            mini_batches = [ training_data[k:k+m] for k in range(0, n, m) ]
             
             for mini_batch in mini_batches:
                 
@@ -91,13 +92,14 @@ class Network():
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         m       = len(mini_batch)
         
+        """ Sum of Gradients over Mini Bach """
         for x, y in mini_batch:
             
             nabla_bx,nabla_wx = self.backprop(x, y)
             nabla_b = [nb+nbx for nb, nbx in zip(nabla_b, nabla_bx)]
             nabla_w = [nw+nwx for nw, nwx in zip(nabla_w, nabla_wx)]
         
-        """ Gradient descent step """
+        """ Gradient descent step with mean Gradient over Mini Bach """
         self.weights = [w-(eta/m)*nw for w, nw in zip(self.weights, nabla_w)]
         self.biases  = [b-(eta/m)*nb for b, nb in zip(self.biases,  nabla_b)] 
          
