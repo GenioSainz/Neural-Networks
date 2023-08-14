@@ -69,7 +69,6 @@ class Network():
             mini_batches = [ training_data[k:k+m] for k in range(0, n, m) ]
             
             for mini_batch in mini_batches:
-                
                 """ Gradient descent step per mini batch """
                 self.update_mini_batch(mini_batch, eta)
                 
@@ -78,7 +77,6 @@ class Network():
                 print("Epoch {} : {} / {} --> {} %".format(epoch,eval_true,n_test,100*eval_true/n_test))
             else:
                 print("Epoch {} complete".format(epoch))
-        
         print("Lapse Time: {} s".format(time.time()-start_time),end='\n \n')
             
         
@@ -112,11 +110,11 @@ class Network():
         nabla_bx = [np.zeros(b.shape) for b in self.biases ]
         nabla_wx = [np.zeros(w.shape) for w in self.weights]
         
-        """feedforward pass"""
+        """forward pass"""
         z      = 0
         a      = x
         z_list = [ ] # list to store all the weight sum  z vectors, layer by layer
-        a_list = [x] # list to store all the activations z vectors, layer by layer
+        a_list = [x] # list to store x and all the activations as a vectors, layer by layer
         
         for b, w in zip(self.biases, self.weights):
             
@@ -129,17 +127,16 @@ class Network():
         """backward pass L""" 
         delta        = self.cost_diff(a_list[-1], y) * self.sigmoid_diff( z_list[-1] )
         nabla_bx[-1] = delta
-        nabla_wx[-1] = delta @ a_list[-2].transpose()
+        nabla_wx[-1] = delta @ a_list[-2].T
         
         """backward pass L-1, L-2, L-3 ...
         layers = [a,b,c,d,e] --> len = 5
         [-l for l in range(2, len)] --> [-2,-3,-4].""" 
         for l in range(2, self.num_layers):
             
-            z            = z_list[-l]
-            delta        = (self.weights[-l+1].transpose() @ delta ) * self.sigmoid_diff(z)
+            delta        = (self.weights[-l+1].T@delta) * self.sigmoid_diff(z_list[-l])
             nabla_bx[-l] = delta
-            nabla_wx[-l] = delta @ a_list[-l-1].transpose()
+            nabla_wx[-l] = delta @ a_list[-l-1].T
     
         return (nabla_bx, nabla_wx)     
     
@@ -153,11 +150,11 @@ class Network():
         return sum(int(x == y) for (x, y) in test_results)
     
     
-    def cost_diff(self, output_activations, y):
+    def cost_diff(self, aL, y):
         """Return the vector of partial derivatives partial(C_x)/partial(aL)
         for the output activations MSE C=||aL-y||^2"""
         
-        return 2*(output_activations-y)
+        return 2*(aL-y)
 
 
      
