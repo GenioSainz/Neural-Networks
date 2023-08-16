@@ -18,7 +18,7 @@ $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths betwee
 
 <img src="MatlabScripts/imgs/net535_0.png"  width="100%">
 <img src="MatlabScripts/imgs/net535_1.png"  width="100%">
-<img src="MatlabScripts/imgs/net535_2.png"  width="100%">
+<!-- <img src="MatlabScripts/imgs/net535_2.png"  width="100%"> -->
 
 
 ## *Feed forward activations: Single Neuron*
@@ -45,31 +45,33 @@ $$TrainingInputs=x_1, x_2, \ldots,x_n$$
 
 $$MiniBatches=[X_1, X_2, \ldots,X_m],[X_1, X_2, \ldots,X_m]...$$
 
-$$\frac{1}{m} \sum_{j=1}^m \nabla C_{X_{j}} \approx \frac{1}{n}\sum_{x=1}^n\nabla C_x = \nabla C$$
+
+
+$$\nabla C =  \frac{1}{n}\sum_{x=1}^n\nabla C_x \approx \frac{1}{m} \sum_{j=1}^m \nabla C_{X_{j}} $$
 
 $$\nabla C \approx \frac{1}{m} \sum_{j=1}^m \nabla C_{X_{j}}$$
 
 
 ## *Update W,b using Gradient Descent*
 
-$$w_k \rightarrow w_k' = w_k-\eta \frac{\partial C}{\partial w_k}$$
+$$w_k \rightarrow  w_k-\eta \frac{\partial C}{\partial w_k}$$
 
-$$b_l \rightarrow b_l' = b_l-\eta \frac{\partial C}{\partial b_l}$$
+$$b_l \rightarrow  b_l-\eta \frac{\partial C}{\partial b_l}$$
 
 
 ## *Update W,b using Stochastic Gradient Descent with Mini-Batches*
 
-$$w_k \rightarrow w_k' = w_k-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w_k}$$
+$$w_k \rightarrow  w_k-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w_k}$$
 
-$$b_l \rightarrow b_l' = b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial b_l}$$
+$$b_l \rightarrow b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial b_l}$$
 
 
 ## *Backpropagation*
 
 Backpropagation compute:
-- The partial derivatives $\partial C_x/ \partial W^l$ and $\partial C_x/ \partial b^l$ for a single training input. We then recover $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$ by averaging over training examples.
+- The partial derivatives $\partial C_x/ \partial W^l$ and $\partial C_x/ \partial b^l$ for a single training input. We then recover $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$ averaging training examples on the mini bach.
 
-- $error$ $\delta^l$ and then will relate  $\delta^l$ to $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$.
+- $Error$ $\delta^l$ and then will relate  $\delta^l$ to $\partial C/ \partial W^l$ and $\partial C/ \partial b^l$.
 
 - Weight and Biases will learn slowly if:
   - The input neuron is low-activation $\rightarrow a^{l-1}_k$.
@@ -89,7 +91,7 @@ $$ \frac{\partial C}{\partial b^L_{j}} =
                                           =\delta^L_j
                                           $$ -->
 
-- Equations:
+- Backpropagation Equations:
 
 $$
 \begin{align}
@@ -105,13 +107,28 @@ $$
 \end{align}
 $$
 
-## *Gradient Descent In Matrix Form*
+
+<img src="MatlabScripts/imgs/netBackProp.png"  width="100%">
+
+## *Gradient Descent Combined with Backpropagation*
 
 $$
 \begin{align}
- W^l & = W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
+ W^l & \rightarrow W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
  & \\
- b^l & = b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
+ b^l & \rightarrow b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
 \end{align}
 $$
+
+## *References*
+
+[Deriving the Backpropagation Equations from Scratch (Part 1)](https://towardsdatascience.com/deriving-the-backpropagation-equations-from-scratch-part-1-343b300c585a)
+
+[Deriving the Backpropagation Equations from Scratch (Part 2)](https://towardsdatascience.com/deriving-the-backpropagation-equations-from-scratch-part-2-693d4162e779)
+
+[Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
+
+[Backpropagation from the beginning](https://medium.com/@erikhallstrm/backpropagation-from-the-beginning-77356edf427d)
+
+[Backpropagation calculus](https://www.3blue1brown.com/lessons/backpropagation-calculus)
 
