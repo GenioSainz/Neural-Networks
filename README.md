@@ -11,13 +11,13 @@
 $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths between node $X$ and node $Z$, multiplying the derivatives on each edge of the path together.
 
 <img src="MatlabScripts/imgs/chainRule0.png"  width="100%">
-<img src="MatlabScripts/imgs/chainRule1.png"  width="100%">
+<!-- <img src="MatlabScripts/imgs/chainRule1.png"  width="100%"> -->
 
 
 ## *Net feed forward Matrix Dimensions*
 
 <img src="MatlabScripts/imgs/net535_0.png"  width="100%">
-<img src="MatlabScripts/imgs/net535_1.png"  width="100%">
+<!-- <img src="MatlabScripts/imgs/net535_1.png"  width="100%"> -->
 <!-- <img src="MatlabScripts/imgs/net535_2.png"  width="100%"> -->
 
 
@@ -107,18 +107,131 @@ $$
 \end{align}
 $$
 
-
-<img src="MatlabScripts/imgs/netBackProp.png"  width="100%">
-
-## *Gradient Descent Combined with Backpropagation*
+- Gradient Descent Combined with Backpropagation
 
 $$
 \begin{align}
- W^l & \rightarrow W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
- & \\
- b^l & \rightarrow b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
+  & W^l \rightarrow W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
+  & \\
+  & b^l \rightarrow b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
 \end{align}
 $$
+
+- Chain rule applied in Backpropagation
+
+<img src="MatlabScripts/imgs/netBackProp.png"  width="100%">
+
+
+
+## *Cross entropy cost function: Avoid slow training*
+
+$$
+ a=a^L =\sigma(z^L)\\
+$$
+- Functions <b>Cuadratic</b> $MSE$  and <b>Cross-Entropy</b> $CE$ 
+
+$$
+\begin{align} 
+  & C_{MSE}  = \frac{1}{2n} \sum_x (y-a)^2\\
+  & \\
+  & C_{CE}  = -\frac{1}{n} \sum_x [y \ln(a)+ (1-y) \ln(1-a)]\\  
+\end{align}
+$$
+
+- Derivatives
+
+$$
+\begin{align} 
+  & \frac{\partial C_{MSE}}{\partial w}  = (a^L-y)\sigma'(z^L)\\
+  & \\
+  & \frac{\partial C_{CE}}{\partial w}  = (a^L-y)a^{L-1}
+\end{align}
+$$
+
+When the weights are updated using the CE cost function it does not matter if the neurons are saturated $\sigma'(z^L) \approx 0$ since the derivative term is avoided. The rate at which the weight learns is controlled by the error $(\sigma(z^L)-y)$. The larger the error, the faster the neuron will learn. The cross-entropy function is demonstrated from the following equations.
+
+$$
+\begin{align} 
+  & \sigma(z)   =1/(1+e^{-z})\\
+  & \\
+  & \sigma'(z)  =\sigma(z)(1-\sigma(z))
+\end{align}
+$$
+
+- Softmax: The activation function of the last layer can be thought of as a probability distribution. It can be useful with classification problems  involving disjoint classes.
+
+$$
+\begin{align} 
+  & a^L_j = \frac{e^{z^L_j}}{\sum e^{z^L_j}}\\
+  & \\
+  & \sum a^L_j = 1
+\end{align}
+$$
+
+## Regularization: Decrease overfitting and Generalise better
+
+The effectis to make it so the network prefers to learn small weights.  Large weights will only be allowed if they considerably improve the first part of the cost function.  Regularization can be viewed as a way of compromising between finding small weights and minimizing the original cost function. The relative importance of the two elements of the compromise depends on the value of $\lambda$. When $\lambda$ is small we prefer to minimize the original cost function, but when $\lambda$ is large we prefer small weights.
+
+- $L1$
+
+$$
+\begin{align} 
+   & C = C_0 + \frac{\lambda}{n} \sum_w |w|\\
+   & \\
+   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + \frac{\lambda}{n} \sum_w |w|\\
+   & \\
+   &  C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +\frac{\lambda}{n} \sum_w |w|\\
+\end{align}
+$$
+
+- $L2$ 
+
+$$
+\begin{align} 
+   & C = C_0 + \frac{\lambda}{2n}\sum_w w^2 \\
+   & \\
+   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + \frac{\lambda}{2n} \sum_w w^2\\
+   & \\
+   & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +\frac{\lambda}{2n} \sum_w w^2\\
+\end{align}
+$$
+
+Regularized networks are constrained to build relatively simple models based on patterns seen often in the training data, and are resistant to learning peculiarities of the noise in the training data.Thus, regularised neural networks tend to generalise better than non-regularised ones.
+
+## Regularization and gradient descent
+
+The dynamics of gradient descent learning in multilayer nets has a ``self-regularization effect´´.
+
+- $L1$
+
+$$
+\begin{align}
+  & C = C_0 + \frac{\lambda}{n}\sum_w |w| \\
+  & \\
+  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} sgn(w) \\ 
+  & \\
+  & w \rightarrow w- \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w}\\
+  & w \rightarrow w- \frac{\eta \lambda}{n} sgn(w) - \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w} \\
+\end{align}
+$$
+
+
+- $L2$
+
+$$
+\begin{align}
+  & C = C_0 + \frac{\lambda}{2n}\sum w^2 \\
+  & \\
+  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w \\ 
+  & \\
+  & w \rightarrow w- \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w} \\
+  & \\
+  & w \rightarrow w-\frac{\eta \lambda}{n}w -\frac{\eta}{m} \sum_j \frac{\partial C_{X_j}}{\partial w}\\
+\end{align}
+$$
+
+- When a particular weight has a large magnitude $|w|$, $L2$ regularization shrinks the weight much more than $L1$ regularization does. When  $|w|$
+ is small, L1 regularization shrinks the weight much more than L2 regularization. 
 
 ## *References*
 

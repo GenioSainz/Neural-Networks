@@ -98,8 +98,8 @@ class Network():
             nabla_w = [nw+nwx for nw, nwx in zip(nabla_w, nabla_wx)]
         
         """ Gradient descent step with mean Gradient over Mini Bach """
-        self.weights = [w-(eta/m)*nw for w, nw in zip(self.weights, nabla_w)]
         self.biases  = [b-(eta/m)*nb for b, nb in zip(self.biases,  nabla_b)] 
+        self.weights = [w-(eta/m)*nw for w, nw in zip(self.weights, nabla_w)]
          
         
     def backprop(self, x, y):
@@ -155,7 +155,8 @@ class Network():
         for the output activations MSE C=||aL-y||^2"""
         
         return 2*(aL-y)
-
+    
+    
 
      
         
