@@ -103,7 +103,7 @@ for l,n in z: print('B2',l,n)
 
 ## soft max
 ##############
-
+## http://neuralnetworksanddeeplearning.com/chap3.html#softmax
 print('\n')
 print('SOFT MAX')
 zL= np.array([2.5,-1,3.2,0.5])

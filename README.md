@@ -168,41 +168,51 @@ $$
 \end{align}
 $$
 
-## Regularization: Decrease overfitting and Generalise better
+## *Regularization: Decrease overfitting and Generalise better*
+
+<img src="PythonScripts/Examples/regularization.png"  width="100%">
 
 The effectis to make it so the network prefers to learn small weights.  Large weights will only be allowed if they considerably improve the first part of the cost function.  Regularization can be viewed as a way of compromising between finding small weights and minimizing the original cost function. The relative importance of the two elements of the compromise depends on the value of $\lambda$. When $\lambda$ is small we prefer to minimize the original cost function, but when $\lambda$ is large we prefer small weights.
 
-- $L1$
+$L1:$
+  
+$$
+\begin{aligned} 
+   & C = C_0 +   \underbrace{ \frac{\lambda}{n} \sum_w |w| }_{L1}\\
+\end{aligned}
+$$
+
+$$
+\begin{aligned} 
+   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L1\\
+   & \\
+   &  C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +L1\\
+\end{aligned}
+$$
+
+$L2:$
 
 $$
 \begin{align} 
-   & C = C_0 + \frac{\lambda}{n} \sum_w |w|\\
-   & \\
-   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + \frac{\lambda}{n} \sum_w |w|\\
-   & \\
-   &  C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +\frac{\lambda}{n} \sum_w |w|\\
+   & C = C_0 +  \underbrace{ \frac{\lambda}{2n}\sum_w w^2}_{L2} \\
 \end{align}
 $$
 
-- $L2$ 
-
 $$
 \begin{align} 
-   & C = C_0 + \frac{\lambda}{2n}\sum_w w^2 \\
+   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L2\\
    & \\
-   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + \frac{\lambda}{2n} \sum_w w^2\\
-   & \\
-   & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +\frac{\lambda}{2n} \sum_w w^2\\
+   & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 + L2\\
 \end{align}
 $$
 
 Regularized networks are constrained to build relatively simple models based on patterns seen often in the training data, and are resistant to learning peculiarities of the noise in the training data.Thus, regularised neural networks tend to generalise better than non-regularised ones.
 
-## Regularization and gradient descent
+## *Regularization and gradient descent*
 
 The dynamics of gradient descent learning in multilayer nets has a ``self-regularization effect´´.
 
-- $L1$
+$L1:$
 
 $$
 \begin{align}
@@ -216,7 +226,7 @@ $$
 $$
 
 
-- $L2$
+$L2:$
 
 $$
 \begin{align}
@@ -230,8 +240,15 @@ $$
 \end{align}
 $$
 
-- When a particular weight has a large magnitude $|w|$, $L2$ regularization shrinks the weight much more than $L1$ regularization does. When  $|w|$
- is small, L1 regularization shrinks the weight much more than L2 regularization. 
+
+
+When a particular weight has a large magnitude $|w|$, $L2$ regularization shrinks the weight much more than $L1$ regularization does. When  $|w|$ is small, L1 regularization shrinks the weight much more than L2 regularization. 
+
+## *Dropout*
+
+The dropout procedure is like averaging the effects of a very large number of different networks. The different networks will overfit in different ways, and so, hopefully, the net effect of dropout will be to reduce overfitting.
+
+If we think of our network as a model which is making predictions, then we can think of dropout as a way of making sure that the model is robust to the loss of any individual piece of evidence. In this, it's somewhat similar to L1 and L2 regularization, which tend to reduce weights, and thus make the network more robust to losing any individual connection in the network
 
 ## *References*
 
