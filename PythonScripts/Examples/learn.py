@@ -106,111 +106,49 @@ for l,n in z: print('B2',l,n)
 ## http://neuralnetworksanddeeplearning.com/chap3.html#softmax
 print('\n')
 print('SOFT MAX')
+print('######################')
 zL= np.array([2.5,-1,3.2,0.5])
 aL = np.exp(zL)/np.sum( np.exp(zL) )
-print(np.round(aL,3))
+print(np.round(aL,3),'\n')
 
 
-class Net():
+print('ZIP ENUMERATE')
+print('######################')
+def sig(z): return 1/(1+np.exp(-z))
 
-    def __init__(self, sizes):
+net    = [2,3,4,5]
+rows   = net[1:]
+cols   = net[:-1]
+a      = np.ones((net[0],1))
+w_list = [np.random.randn(i,j) for i,j in zip(rows,cols)]
+b_list = [np.random.randn(i,1) for i   in rows]
+
+
+for l,(wl,bl) in enumerate(zip(w_list,b_list)):
     
-        self.num_layers = len(sizes)
-        self.rows       = sizes[1:]
-        self.cols       = sizes[:-1]
-        self.biases     = [np.random.randn(i,1) for i   in self.rows]
-        self.weights    = [np.random.randn(i,j) for i,j in zip(self.rows,self.cols)]
+    a = sig(wl@a +bl)
     
+    print('layer: ',l)
+    print('########')
+    print('Wl: ',wl,'\n')
+    print('bl: ',bl,'\n')
+    print('al: ',a,'\n')
     
-    def sigmoid(self,z):
 
-        return 1/(1+np.exp(-z))
+
+def An(n):
+     
+    # https://rowannicholls.github.io/python/graphs/image_size.html
     
-    def sigmoid_diff(self,z):
-
-        return np.exp(-z)/(1+np.exp(-z))**2
- 
-    def feedForward(self,a):
-
-        for w,b in zip(self.weights,self.biases):
-            
-            a = self.sigmoid( w@a + b) 
-        return a
+    a = 1.189*0.5**(0.5*n)
+    b = 0.841*0.5**(0.5*n)
     
-    def SGD(self, training_data, epochs, mini_batch_size, eta):
+    return a,b
 
-        training_data = list(training_data)
-        n             = len(training_data)
-        m             = mini_batch_size
+# FORMAT 
+X = np.arange(2,13)
 
-        for epoch in range(epochs):
-            
-            random.shuffle(training_data)
-            mini_batches  = [training_data[i:i+m] for i in range(0,n,m)]
-        
-            for mini_batch in mini_batches:
-                self.update_mini_bach(mini_batch,eta)
-                
-            print(epoch)
-
-    def update_mini_bach(self,mini_batch,eta):
-
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
-        nabla_b = [np.zeros(b.shape) for b in self.biases ]
-        m       = len(mini_batch)
-        
-        for x,y in mini_batch:
-            
-            nabla_bx,nabla_wx = self.backprop(x,y)
-            nabla_w = [ nw + nwx  for nw,nwx in zip(nabla_w, nabla_wx) ]
-            nabla_b = [ nb + nbx  for nb,nbx in zip(nabla_b, nabla_bx) ]
-            
-        self.weights = [ w-(eta/m)*nw for w,nw in zip(self.weights,nabla_w) ]
-        self.biases  = [ b-(eta/m)*nb for b,nb in zip(self.biases ,nabla_b) ]
-
-    def backprop(self, x,y):
+for x in X:
     
-        nabla_bx = [np.zeros(b.shape) for b in self.biases ]
-        nabla_wx = [np.zeros(w.shape) for w in self.weights]
-        z      = 0
-        a      = x
-        z_list = [ ]
-        a_list = [x]
-        
-        """ forward pass """
-        for w,b in zip(self.weights,self.biases):
-             
-            z = w@a + b
-            a = self.sigmoid(z)
-
-            z_list.append(z)
-            a_list.append(a)
-
-        """ backward pass L""" 
-        delta        = self.cost_diff(a_list[-1],y)*self.sigmoid_diff(z_list[-1])
-        nabla_wx[-1] = delta@a_list[-2].T
-        nabla_bx[-1] = delta
-        
-        
-        for l in range(2,self.num_layers):
-    
-            delta = (self.weights[-l+1].T@delta)*self.sigmoid_diff(z_list[-l])
-            nabla_wx[-l] = delta@a_list[-l-1].T
-            nabla_bx[-l] = delta
-
-        return (nabla_bx,nabla_wx)
-    
-       
-    def cost_diff(self,aL,y):
-        
-        return 2*(aL-y)
-    
-    def evaluate(self, test_data):
-        """Return the number of test inputs for which the neural
-        network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever
-        neuron in the final layer has the highest activation."""
-        
-        test_results = [ (np.argmax(self.feedForward(x)), y) for (x, y) in test_data]
-        return sum(int(x == y) for (x, y) in test_results)
-
+    txt  = "Number:{:3}  scuare:{:4} number+pi:{:.2f} cube:{:5}".format(x,x**2,x+np.pi,x**3)
+    print(txt)
