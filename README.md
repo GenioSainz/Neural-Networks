@@ -1,3 +1,5 @@
+ <!-- git push -f origin main -->
+
 # Gradient Descent Algorithms
 
 - Batch Gradient Descent.
@@ -170,6 +172,7 @@ $$
 
 ## *Regularization: Decrease overfitting and Generalise better*
 
+
 <img src="PythonScripts/Examples/regularization.png"  width="100%">
 
 The effectis to make it so the network prefers to learn small weights.  Large weights will only be allowed if they considerably improve the first part of the cost function.  Regularization can be viewed as a way of compromising between finding small weights and minimizing the original cost function. The relative importance of the two elements of the compromise depends on the value of $\lambda$. When $\lambda$ is small we prefer to minimize the original cost function, but when $\lambda$ is large we prefer small weights.
@@ -251,6 +254,7 @@ The dropout procedure is like averaging the effects of a very large number of di
 If we think of our network as a model which is making predictions, then we can think of dropout as a way of making sure that the model is robust to the loss of any individual piece of evidence. In this, it's somewhat similar to L1 and L2 regularization, which tend to reduce weights, and thus make the network more robust to losing any individual connection in the network
 
 ## *References*
+[Computational Graphs](http://colah.github.io/posts/2015-08-Backprop/)
 
 [Deriving the Backpropagation Equations from Scratch (Part 1)](https://towardsdatascience.com/deriving-the-backpropagation-equations-from-scratch-part-1-343b300c585a)
 
@@ -261,4 +265,5 @@ If we think of our network as a model which is making predictions, then we can t
 [Backpropagation from the beginning](https://medium.com/@erikhallstrm/backpropagation-from-the-beginning-77356edf427d)
 
 [Backpropagation calculus](https://www.3blue1brown.com/lessons/backpropagation-calculus)
+
 
