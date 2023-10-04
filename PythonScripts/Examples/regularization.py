@@ -29,7 +29,6 @@ yfitn = np.polyval(poln,x)
 ## plot mean digits  https://matplotlib.org/stable/tutorials/introductory/customizing.html
 ##############################
 plt.rcParams.update(plt.rcParamsDefault)
-
 plt.close('all')
 
 SMALL_SIZE  = 14
