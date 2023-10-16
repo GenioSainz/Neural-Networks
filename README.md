@@ -170,8 +170,10 @@ $$
 \end{align}
 $$
 
-## *Regularization: Decrease overfitting and Generalise better*
+## *Logistic Regression and the Cross Entropy Cost*
+<img src="PythonScripts/Examples/b_c_e.png"  width="100%">
 
+## *Regularization: Decrease overfitting and Generalise better*
 
 <img src="PythonScripts/Examples/regularization.png"  width="100%">
 
