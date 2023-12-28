@@ -8,11 +8,19 @@
 
 <img src="MatlabScripts/imgs/GradientDescentAlgorithms.png"  width="100%">
 
+```python
+# MINI BACH GRADIENT DESCENT
+for epoch in n_epochs:
+    for batch in n_batches:
+        for all instances in the batch  
+            #compute the derivative of the cost function
+        #update the weights and biases
+```
 # Derivatives on Computational Graphs
 
 $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths between node $X$ and node $Z$, multiplying the derivatives on each edge of the path together.
 
-<img src="MatlabScripts/imgs/chainRule0.png"  width="100%">
+<img src="MatlabScripts/imgs/chainRule2.png"  width="100%">
 <!-- <img src="MatlabScripts/imgs/chainRule1.png"  width="100%"> -->
 
 
@@ -125,7 +133,7 @@ $$
 
 
 
-## *Cross entropy cost function: Avoid slow training*
+## *Binary cross entropy cost function: Avoid slow training*
 
 $$
  a=a^L =\sigma(z^L)\\
@@ -136,7 +144,7 @@ $$
 \begin{align} 
   & C_{MSE}  = \frac{1}{2n} \sum_x (y-a)^2\\
   & \\
-  & C_{CE}  = -\frac{1}{n} \sum_x [y \ln(a)+ (1-y) \ln(1-a)]\\  
+  & C_{CE}  = -\frac{1}{n} \sum_x y \ln(a)+ (1-y) \ln(1-a)\\  
 \end{align}
 $$
 
@@ -170,7 +178,18 @@ $$
 \end{align}
 $$
 
-## *Logistic Regression and the Cross Entropy Cost*
+## *Logistic Regression and Binary Cross Entropy Cost*
+
+- Entropy
+$$
+   H(p) = -\sum_x p(x) \log(p(x))
+$$
+
+- Cross Entropy
+$$
+   H(p,q) = -\sum_x p(x) \log(q(x))
+$$
+
 <img src="PythonScripts/Examples/b_c_e.png"  width="100%">
 
 ## *Regularization: Decrease overfitting and Generalise better*
@@ -235,7 +254,7 @@ $L2:$
 
 $$
 \begin{align}
-  & C = C_0 + \frac{\lambda}{2n}\sum w^2 \\
+  & C = C_0 + \frac{\lambda}{-2n}\sum w^2 \\
   & \\
   & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w \\ 
   & \\
@@ -267,5 +286,7 @@ If we think of our network as a model which is making predictions, then we can t
 [Backpropagation from the beginning](https://medium.com/@erikhallstrm/backpropagation-from-the-beginning-77356edf427d)
 
 [Backpropagation calculus](https://www.3blue1brown.com/lessons/backpropagation-calculus)
+
+[Binary-Cross-Entropy](https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a)
 
 
