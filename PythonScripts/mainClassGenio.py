@@ -45,13 +45,23 @@ class Network():
     
     def SGD(self, training_data, epochs, mini_batch_size, eta,test_data=None):
         """Train the neural network using mini-batch stochastic
-        The ``training_data`` is a list of tuples
-        ``(x, y)`` representing the training inputs and the desired
-        outputs.  The other non-optional parameters are
+        The ``training_data`` is a list of tuples representing the 
+        training inputs and the desired outputs:
+            
+        # training_data = [(x1,y1),(x2,y2)...(xn,yn)]
+        # xi =  array(784,1)
+        # yi =  array(10,1)
+
+        # test_data = [(x1,y1),(x2,y2)...(xn,yn)]
+        # xi =  array(784,1)
+        # yi =  number 0,1,2...9
+        
+        The other non-optional parameters are
         self-explanatory.  If ``test_data`` is provided then the
         network will be evaluated against the test data after each
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially"""
+        
         print("Genio Neural Network",end='\n')
         
         training_data = list(training_data)
@@ -147,6 +157,7 @@ class Network():
         neuron in the final layer has the highest activation."""
         
         test_results = [ (np.argmax(self.feedForward(x)), y) for (x, y) in test_data]
+        
         return sum(int(x == y) for (x, y) in test_results)
     
     

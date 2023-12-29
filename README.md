@@ -208,7 +208,7 @@ $$
 
 $$
 \begin{aligned} 
-   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L1\\
+   & C_{BCE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L1\\
    & \\
    &  C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +L1\\
 \end{aligned}
@@ -224,7 +224,7 @@ $$
 
 $$
 \begin{align} 
-   & C_{CE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L2\\
+   & C_{BCE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L2\\
    & \\
    & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 + L2\\
 \end{align}
