@@ -180,14 +180,14 @@ $$
 
 ## *Logistic Regression and Binary Cross Entropy Cost*
 
-- Entropy
+- Entropy: $H(p)$
+- Cross Entropy: $H(p,q)$
 $$
-   H(p) = -\sum_x p(x) \log(p(x))
-$$
-
-- Cross Entropy
-$$
-   H(p,q) = -\sum_x p(x) \log(q(x))
+\begin{align} 
+  &  H(p) = -\sum_x p(x) \log(p(x))\\
+  & \\
+  & H(p,q) = -\sum_x p(x) \log(q(x))\\
+\end{align}
 $$
 
 <img src="PythonScripts/Examples/b_c_e.png"  width="100%">
@@ -254,7 +254,7 @@ $L2:$
 
 $$
 \begin{align}
-  & C = C_0 + \frac{\lambda}{-2n}\sum w^2 \\
+  & C = C_0 + \frac{\lambda}{2n}\sum w^2 \\
   & \\
   & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w \\ 
   & \\
@@ -273,6 +273,31 @@ When a particular weight has a large magnitude $|w|$, $L2$ regularization shrink
 The dropout procedure is like averaging the effects of a very large number of different networks. The different networks will overfit in different ways, and so, hopefully, the net effect of dropout will be to reduce overfitting.
 
 If we think of our network as a model which is making predictions, then we can think of dropout as a way of making sure that the model is robust to the loss of any individual piece of evidence. In this, it's somewhat similar to L1 and L2 regularization, which tend to reduce weights, and thus make the network more robust to losing any individual connection in the network
+
+## *Weight Initialization*
+
+When the weights have a large magnitude, the sigmoid and tanh activation functions take on values very close to saturation. When the activations become saturated, the gradients move close to zero during backpropagation.
+
+The idea is to initialize 
+$Var(W)$ in a way that $Var(Z)$ remains roughly constant. This is where the 
+$\frac{1}{\sqrt n}$ scaling comes in. By dividing the weights by $\sqrt n$, the variance of the weights is effectively scaled by $\frac{1}{n}$, ensuring that the variance of the output remains approximately 1
+
+Sacaling the standard normal distribution  by a constant $k$ effectively multiply the variance by $k^2$
+ 
+
+```python
+# randn
+weights = [np.random.randn(r,c) for r,c in zip(rows,cols)]
+
+# normalized
+weights = [np.random.randn(r,c)/np.sqrt(c) for r,c in zip(rows,cols)]
+```
+
+### Randn
+<img src="PythonScripts/Examples/weights_randn.png"  width="100%">
+
+### Normalized
+<img src="PythonScripts/Examples/weights_randn_normalize.png"  width="100%">
 
 ## *References*
 [Computational Graphs](http://colah.github.io/posts/2015-08-Backprop/)

@@ -15,15 +15,17 @@ epochs          = 1
 mini_batch_size = 10
 eta             = 1
 
-
+# 50000
 # training_data = [(x1,y1),(x2,y2)...(xn,yn)]
 # xi =  array(784,1)
 # yi =  array(10,1)
 
+# 10000 
 # test_data = [(x1,y1),(x2,y2)...(xn,yn)]
 # xi =  array(784,1)
 # yi =  number 0,1,2...9
 
+# 10000 
 # validation_data = [(x1,y1),(x2,y2)...(xn,yn)]
 # xi =  array(784,1)
 # yi =  number 0,1,2...9

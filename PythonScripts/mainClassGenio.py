@@ -43,15 +43,17 @@ class Network():
         return a
     
     
-    def SGD(self, training_data, epochs, mini_batch_size, eta,test_data=None):
+    def SGD(self, training_data, epochs, mini_batch_size, eta, test_data=None):
         """Train the neural network using mini-batch stochastic
         The ``training_data`` is a list of tuples representing the 
         training inputs and the desired outputs:
             
+        # 50000
         # training_data = [(x1,y1),(x2,y2)...(xn,yn)]
         # xi =  array(784,1)
         # yi =  array(10,1)
-
+        
+        # 10000
         # test_data = [(x1,y1),(x2,y2)...(xn,yn)]
         # xi =  array(784,1)
         # yi =  number 0,1,2...9
@@ -96,20 +98,22 @@ class Network():
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
         is the learning rate."""
         
-        nabla_b = [np.zeros(b.shape) for b in self.biases]
-        nabla_w = [np.zeros(w.shape) for w in self.weights]
-        m       = len(mini_batch)
+        nabla_b_sum = [np.zeros(b.shape) for b in self.biases ]
+        nabla_w_sum = [np.zeros(w.shape) for w in self.weights]
+        m           = len(mini_batch)
         
         """ Sum of Gradients over Mini Bach """
         for x, y in mini_batch:
             
+            """ nabla_bx nabla_wx for single train input"""
             nabla_bx,nabla_wx = self.backprop(x, y)
-            nabla_b = [nb+nbx for nb, nbx in zip(nabla_b, nabla_bx)]
-            nabla_w = [nw+nwx for nw, nwx in zip(nabla_w, nabla_wx)]
+            
+            nabla_b_sum = [nbs+nbx for nbs, nbx in zip(nabla_b_sum, nabla_bx)]
+            nabla_w_sum = [nws+nwx for nws, nwx in zip(nabla_w_sum, nabla_wx)]
         
         """ Gradient descent step with mean Gradient over Mini Bach """
-        self.biases  = [b-(eta/m)*nb for b, nb in zip(self.biases,  nabla_b)] 
-        self.weights = [w-(eta/m)*nw for w, nw in zip(self.weights, nabla_w)]
+        self.biases  = [b-(eta/m)*nbs for b, nbs in zip(self.biases,  nabla_b_sum)] 
+        self.weights = [w-(eta/m)*nws for w, nws in zip(self.weights, nabla_w_sum)]
          
         
     def backprop(self, x, y):
@@ -121,7 +125,6 @@ class Network():
         nabla_wx = [np.zeros(w.shape) for w in self.weights]
         
         """forward pass"""
-        z      = 0
         a      = x
         z_list = [ ] # list to store all the weight sum  z vectors, layer by layer
         a_list = [x] # list to store x and all the activations as a vectors, layer by layer
@@ -141,10 +144,10 @@ class Network():
         
         """backward pass L-1, L-2, L-3 ...
         layers = [a,b,c,d,e] --> len = 5
-        [-l for l in range(2, len)] --> [-2,-3,-4].""" 
+        [-l for l in range(2, len)] --> [-2,-3,-4]""" 
         for l in range(2, self.num_layers):
             
-            delta        = (self.weights[-l+1].T@delta) * self.sigmoid_diff(z_list[-l])
+            delta        = (self.weights[-l+1].T@delta) * self.sigmoid_diff( z_list[-l] )
             nabla_bx[-l] = delta
             nabla_wx[-l] = delta @ a_list[-l-1].T
     
@@ -163,9 +166,9 @@ class Network():
     
     def cost_diff(self, aL, y):
         """Return the vector of partial derivatives partial(C_x)/partial(aL)
-        for the output activations MSE C=||aL-y||^2"""
+        for the output activations MSE C=1/2*||aL-y||^2"""
         
-        return 2*(aL-y)
+        return (aL-y)
     
     
 

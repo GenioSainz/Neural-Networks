@@ -4,6 +4,7 @@ Created on Thu Aug 31 14:45:38 2023
 
 @author: Genio
 """
+
 """network2.py
 ~~~~~~~~~~~~~~
 
