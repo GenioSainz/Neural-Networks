@@ -6,8 +6,8 @@ Created on Tue Jan 10 15:43:14 2023
 """
 import mnist_loader
 
-from mainClassNielsen import Network as Network_N
-from mainClassGenio   import Network as Network_G
+from network  import Network as Network_N
+from networkG import Network as Network_G
 
 #SGD(self, training_data, epochs, mini_batch_size, eta, test_data=None):   
 layers          = [784, 30, 30, 10]
