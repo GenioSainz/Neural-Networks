@@ -177,7 +177,7 @@ class Network(object):
             if monitor_evaluation_accuracy:
                 accuracy = self.accuracy(evaluation_data)
                 evaluation_accuracy.append(accuracy)
-                print("Accuracy on evaluation data: {} / {}".format(self.accuracy(evaluation_data), n_data))
+                print("Accuracy on evaluation data: {} / {}".format(self.accuracy(evaluation_data), n_data),end='\n\n')
 
             # Early stopping:
             if early_stopping_n > 0:
@@ -193,7 +193,7 @@ class Network(object):
                     return evaluation_cost, evaluation_accuracy, training_cost, training_accuracy
 
         return evaluation_cost, evaluation_accuracy, \
-            training_cost, training_accuracy
+               training_cost, training_accuracy
 
     def update_mini_batch(self, mini_batch, eta, lmbda, n):
         """Update the network's weights and biases by applying gradient
@@ -227,18 +227,19 @@ class Network(object):
         # feedforward
         activation = x
         activations = [x] # list to store all the activations, layer by layer
-        zs = [] # list to store all the z vectors, layer by layer
+        zs = []           # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
             
             z = w@activation + b
-            zs.append(z)
             activation = sigmoid(z)
+            zs.append(z)
             activations.append(activation)
             
         # backward pass
         delta = (self.cost).delta(zs[-1], activations[-1], y)
         nabla_b[-1] = delta
-        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+        nabla_w[-1] = delta@activations[-2].T
+        
         # Note that the variable l in the loop below is used a little
         # differently to the notation in Chapter 2 of the book.  Here,
         # l = 1 means the last layer of neurons, l = 2 is the
@@ -246,8 +247,8 @@ class Network(object):
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
         for l in range(2, self.num_layers):
-            z = zs[-l]
-            sp = sigmoid_diff(z)
+            z     = zs[-l]
+            sp    = sigmoid_diff(z)
             delta = (self.weights[-l+1].T @ delta) * sp
             nabla_b[-l] = delta
             nabla_w[-l] = delta @ activations[-l-1].T

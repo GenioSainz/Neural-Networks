@@ -102,5 +102,5 @@ axs[2].set_ylim(ylims)
 axs[2].legend()
 
 
-plt.savefig('regularization.png',dpi=100)
+plt.savefig('imgs/regularization.png',dpi=100)
 plt.show()

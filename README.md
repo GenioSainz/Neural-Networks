@@ -39,14 +39,9 @@ $$a^{l}_j = \sigma \bigg( \sum_k w^l _{jk} a^{l-1}_k + b^l_j \bigg)$$
 
 $w_{jk}$ denote the weight for the connection from the $k \textrm{  } neuron$ in the $(l−1)$ layer to the $j \textrm{  } neuron$ in the layer $l$.
 
-## *Feed forward activation: Vectorized form*
+In vectorized form:
 
 $$a^l = \sigma \bigg( W^la^{l-1}+b^l \bigg)$$
-
-
-## *Cost function* $MSE$
-
-$$C(w,b) = \frac{1}{n} \sum_x || y(x) - a^L||^2 $$
 
 
 ## *Gradient vector of the cost function*
@@ -87,33 +82,19 @@ Backpropagation compute:
   - The input neuron is low-activation $\rightarrow a^{l-1}_k$.
   - The output neuron has saturated $\rightarrow \sigma'(z^l)$
 
-<!-- $$ \frac{\partial C}{\partial w^L_{jk}} =  
-                                              \underbrace{\frac{\partial C}{\partial a^L_{j}} 
-                                              \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
-                                              \frac{\partial z^L_{j}}{\partial w^L_{jk}}
-                                              =\delta^L_j a^{L-1}_{k}
-                                              $$
-
-$$ \frac{\partial C}{\partial b^L_{j}} =  
-                                          \underbrace{\frac{\partial C}{\partial a^L_{j}} 
-                                          \frac{\partial a^L_{j}}{\partial z^L_{j}}}_{\delta^L_j}
-                                          \frac{\partial z^L_{j}}{\partial b^L_{j}}
-                                          =\delta^L_j
-                                          $$ -->
-
 - Backpropagation Equations:
 
 $$
 \begin{align}
-    & \delta^L = \frac{\partial C}{\partial z^L}\\
-    & \\  
-    & \delta^L = \nabla_{a^L} C \odot \sigma'(z^L) \\
-    & \\
+    & \delta^L = \frac{\partial C}{\partial z^L}                 \\
+    &                                                            \\  
+    & \delta^L = \nabla_{a^L} C \odot \sigma'(z^L)               \\
+    &                                                            \\
     & \delta^l   = ([W^{l+1}]^T \delta^{l+1}) \odot \sigma'(z^l) \\
-    & \\
-    & \frac{\partial C}{\partial W^l} = \delta^l [a^{l-1}]^T\\
-    & \\
-    & \frac{\partial C}{\partial b^l} =\delta^l \\
+    &                                                            \\
+    & \frac{\partial C}{\partial W^l} = \delta^l [a^{l-1}]^T     \\
+    &                                                            \\
+    & \frac{\partial C}{\partial b^l} =\delta^l                  \\
 \end{align}
 $$
 
@@ -121,9 +102,9 @@ $$
 
 $$
 \begin{align}
-  & W^l \rightarrow W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T\\
-  & \\
-  & b^l \rightarrow b^l -\frac{\eta}{m} \sum^m_x \delta^l_x
+  & W^l \rightarrow W^l -\frac{\eta}{m} \sum^m_x \delta^l_x [a^{l-1}_x]^T \\
+  &                                                                       \\
+  & b^l \rightarrow b^l -\frac{\eta}{m} \sum^m_x \delta^l_x               \\
 \end{align}
 $$
 
@@ -135,82 +116,79 @@ $$
 
 ## *Binary cross entropy cost function: Avoid slow training*
 
+$$ a=a^L =\sigma(z^L) 
 $$
- a=a^L =\sigma(z^L)\\
-$$
-- Functions <b>Cuadratic</b> $MSE$  and <b>Cross-Entropy</b> $CE$ 
+- <b>Quadratic Cost</b> $MSE$: Often used in regression problems where the goal is to predict continuous values.
+- <b>Binary Cross-Entropy</b> $BCE$: Often used in classification problems where the goal is to predict discrete class labels 
 
 $$
 \begin{align} 
-  & C_{MSE}  = \frac{1}{2n} \sum_x (y-a)^2\\
-  & \\
-  & C_{CE}  = -\frac{1}{n} \sum_x y \ln(a)+ (1-y) \ln(1-a)\\  
+   & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2                        \\
+   &                                                                  \\
+   & C_{BCE}  = -\frac{1}{n} \sum_{x}\sum  y \ln a^L+(1-y) \ln(1-a^L) \\
 \end{align}
 $$
 
-- Derivatives
+- Derivatives :
+
+$$\frac{\partial C_{MSE}}{\partial W^L} = \underbrace{ (a^L-y) \sigma'(z^L) }_{\delta^L}[a^{L-1}]^T$$
+
+$$\frac{\partial C_{BCE}}{\partial W^L} = \underbrace{ (a^L-y) }_{\delta^L}[a^{L-1}]^T$$
+
+When the weights are updated using the CE cost function it does not matter if the neurons are saturated $\sigma'(z^L) \approx 0$ since the derivative term is avoided. The rate at which the weight learns is controlled by the error $(a^L-y)$. The larger the error, the faster the neuron will learn. The cross-entropy function is demonstrated from the following equations. The quadratic cost learning is slower when the neuron is wrong, while with the cross-entropy learning is faster when the neuron is wrong
 
 $$
 \begin{align} 
-  & \frac{\partial C_{MSE}}{\partial w}  = (a^L-y)\sigma'(z^L)\\
-  & \\
-  & \frac{\partial C_{CE}}{\partial w}  = (a^L-y)a^{L-1}
+  & \sigma(z)  = 1/(1+e^{-z})           \\
+  &                                     \\
+  & \sigma'(z) = \sigma(z)(1-\sigma(z)) \\
 \end{align}
 $$
 
-When the weights are updated using the CE cost function it does not matter if the neurons are saturated $\sigma'(z^L) \approx 0$ since the derivative term is avoided. The rate at which the weight learns is controlled by the error $(\sigma(z^L)-y)$. The larger the error, the faster the neuron will learn. The cross-entropy function is demonstrated from the following equations.
-
-$$
-\begin{align} 
-  & \sigma(z)   =1/(1+e^{-z})\\
-  & \\
-  & \sigma'(z)  =\sigma(z)(1-\sigma(z))
-\end{align}
-$$
-
-- Softmax: The activation function of the last layer can be thought of as a probability distribution. It can be useful with classification problems  involving disjoint classes.
-
-$$
-\begin{align} 
-  & a^L_j = \frac{e^{z^L_j}}{\sum e^{z^L_j}}\\
-  & \\
-  & \sum a^L_j = 1
-\end{align}
-$$
+<img src="PythonScripts\Examples\imgs\DeltaError.png"  width="100%">
 
 ## *Logistic Regression and Binary Cross Entropy Cost*
 
 - Entropy: $H(p)$
 - Cross Entropy: $H(p,q)$
 $$
+
 \begin{align} 
-  &  H(p) = -\sum_x p(x) \log(p(x))\\
-  & \\
-  & H(p,q) = -\sum_x p(x) \log(q(x))\\
+  &  H(p) = -\sum_x p(x) \log(p(x))  \\
+  &                                  \\
+  & H(p,q) = -\sum_x p(x) \log(q(x)) \\
 \end{align}
 $$
 
-<img src="PythonScripts/Examples/b_c_e.png"  width="100%">
+<img src="PythonScripts/Examples/imgs/b_c_e.png"  width="100%">
+
+## Softmax
+
+The activation function of the last layer can be thought of as a probability distribution. It can be useful with classification problems  involving disjoint classes.
+
+$$
+\begin{align} 
+  & a^L_j = \frac{e^{z^L_j}}{\sum e^{z^L_j}} \\
+  &                                          \\
+  & \sum a^L_j = 1                           \\
+\end{align}
+$$
+
 
 ## *Regularization: Decrease overfitting and Generalise better*
 
-<img src="PythonScripts/Examples/regularization.png"  width="100%">
+<img src="PythonScripts/Examples/imgs/regularization.png"  width="100%">
 
-The effectis to make it so the network prefers to learn small weights.  Large weights will only be allowed if they considerably improve the first part of the cost function.  Regularization can be viewed as a way of compromising between finding small weights and minimizing the original cost function. The relative importance of the two elements of the compromise depends on the value of $\lambda$. When $\lambda$ is small we prefer to minimize the original cost function, but when $\lambda$ is large we prefer small weights.
+The effectis to make it so the network prefers to learn small weights.  Large weights will only be allowed if they considerably improve the first part of the cost function.  Regularization can be viewed as a way of compromising between finding small weights and minimizing the original cost function. The relative importance of the two elements of the compromise depends on the value of $\lambda$. When $\lambda$ is small we prefer to minimize the original cost function, but when $\lambda$ is large we prefer small weights. Instead of simply aiming to minimize loss (empirical risk minimization) we'll now minimize loss+complexity, which is called structural risk minimization:
+
+$$\text{minimize( Loss(Data|Model) )}$$
+$$\text{minimize( Loss(Data|Model) + complexity(Model) )}$$
 
 $L1:$
   
 $$
 \begin{aligned} 
-   & C = C_0 +   \underbrace{ \frac{\lambda}{n} \sum_w |w| }_{L1}\\
-\end{aligned}
-$$
-
-$$
-\begin{aligned} 
-   & C_{BCE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L1\\
-   & \\
-   &  C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 +L1\\
+   & C = C_0 +   \underbrace{ \frac{\lambda}{n} \sum_w |w| }_{L1} \\
 \end{aligned}
 $$
 
@@ -219,14 +197,6 @@ $L2:$
 $$
 \begin{align} 
    & C = C_0 +  \underbrace{ \frac{\lambda}{2n}\sum_w w^2}_{L2} \\
-\end{align}
-$$
-
-$$
-\begin{align} 
-   & C_{BCE}  = -\frac{1}{n} \sum_{x}\sum_{j} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + L2\\
-   & \\
-   & C_{MSE} = \frac{1}{2n} \sum_x ||y-a^L||^2 + L2\\
 \end{align}
 $$
 
@@ -240,31 +210,29 @@ $L1:$
 
 $$
 \begin{align}
-  & C = C_0 + \frac{\lambda}{n}\sum_w |w| \\
-  & \\
-  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} sgn(w) \\ 
-  & \\
-  & w \rightarrow w- \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w}\\
-  & w \rightarrow w- \frac{\eta \lambda}{n} sgn(w) - \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w} \\
+  & C = C_0 + \frac{\lambda}{n}\sum_w |w|                                                                      \\
+  &                                                                                                            \\
+  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} sgn(w)                 \\ 
+  &                                                                                                            \\
+  & w \rightarrow w - \eta \frac{\lambda}{n} sgn(w) - \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w} \\
 \end{align}
 $$
-
 
 $L2:$
 
 $$
 \begin{align}
-  & C = C_0 + \frac{\lambda}{2n}\sum w^2 \\
-  & \\
-  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w \\ 
-  & \\
-  & w \rightarrow w- \frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w} \\
-  & \\
-  & w \rightarrow w-\frac{\eta \lambda}{n}w -\frac{\eta}{m} \sum_j \frac{\partial C_{X_j}}{\partial w}\\
+  & C = C_0 + \frac{\lambda}{2n}\sum w^2                                                                           \\
+  &                                                                                                                \\
+  & \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w                          \\ 
+  &                                                                                                                \\ 
+  &  w  \rightarrow  w-\eta \frac{\partial C_0}{\partial w}-\eta\frac{ \lambda}{n} w                               \\
+  &                                                                                                                \\
+  & w \rightarrow w-\eta \frac{\lambda}{n}w -\frac{\eta}{m} \sum_j \frac{\partial C_{X_j}}{\partial w}             \\
+  &                                                                                                                \\
+  &w \rightarrow \left(1-\eta \frac{\lambda}{n}\right)w -\frac{\eta}{m} \sum_j \frac{\partial C_{X_j}}{\partial w} \\
 \end{align}
 $$
-
-
 
 When a particular weight has a large magnitude $|w|$, $L2$ regularization shrinks the weight much more than $L1$ regularization does. When  $|w|$ is small, L1 regularization shrinks the weight much more than L2 regularization. 
 
@@ -278,12 +246,23 @@ If we think of our network as a model which is making predictions, then we can t
 
 When the weights have a large magnitude, the sigmoid and tanh activation functions take on values very close to saturation. When the activations become saturated, the gradients move close to zero during backpropagation.
 
+- The problem of saturation of the <b>output neurons</b> causes a learning slowdown using the MSE cost function. This problem is solved using the BCE cost function.
+
+- For the saturation of the  <b>hidden neurons</b> this problem is solved with a correct weight initialization.
+
 The idea is to initialize 
 $Var(W)$ in a way that $Var(Z)$ remains roughly constant. This is where the 
 $\frac{1}{\sqrt n}$ scaling comes in. By dividing the weights by $\sqrt n$, the variance of the weights is effectively scaled by $\frac{1}{n}$, ensuring that the variance of the output remains approximately 1
+Sacaling the standard normal distribution  by a constant $n$ effectively multiply the variance by $n^2$.
 
-Sacaling the standard normal distribution  by a constant $k$ effectively multiply the variance by $k^2$
- 
+- <b>Standard Normal Distribution:</b> The weights for each connection between input neurons and hidden neurons are drawn independently from a standard normal distribution 
+$N(0,1)$ The mean of this distribution is 0, and the variance is 1.
+
+- <b>Variance in Hidden Neurons:</b> The variance in the hidden neurons is influenced by the weights connecting the input neurons to the hidden neurons.
+Since each weight is drawn independently from a standard normal distribution, the overall variance in the hidden neurons would be proportional to the number of input neurons.
+
+- <b>Effect on Learning:</b> While random initialization is crucial for breaking symmetry and promoting effective learning, initializing weights without scaling can lead to challenges such as vanishing or exploding gradients, especially in deep networks.
+
 
 ```python
 # randn
@@ -293,11 +272,13 @@ weights = [np.random.randn(r,c) for r,c in zip(rows,cols)]
 weights = [np.random.randn(r,c)/np.sqrt(c) for r,c in zip(rows,cols)]
 ```
 
+<img src="PythonScripts/Examples/imgs/weight_distribution.png"  width="100%">
+
 ### Randn
-<img src="PythonScripts/Examples/weights_randn.png"  width="100%">
+<img src="PythonScripts/Examples/imgs/weights_randn.png"  width="100%">
 
 ### Normalized
-<img src="PythonScripts/Examples/weights_randn_normalize.png"  width="100%">
+<img src="PythonScripts/Examples/imgs/weights_randn_normalize.png"  width="100%">
 
 ## *References*
 [Computational Graphs](http://colah.github.io/posts/2015-08-Backprop/)
