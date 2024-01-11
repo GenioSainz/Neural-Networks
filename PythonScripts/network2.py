@@ -218,8 +218,7 @@ class Network(object):
                     #print("Early-stopping: No accuracy change in last epochs: {}".format(early_stopping_n))
                     return evaluation_cost, evaluation_accuracy, training_cost, training_accuracy
 
-        return evaluation_cost, evaluation_accuracy, \
-            training_cost, training_accuracy
+        return evaluation_cost, evaluation_accuracy, training_cost, training_accuracy
 
     def update_mini_batch(self, mini_batch, eta, lmbda, n):
         """Update the network's weights and biases by applying gradient
@@ -295,16 +294,16 @@ class Network(object):
         representations speeds things up.  More details on the
         representations can be found in
         mnist_loader.load_data_wrapper.
-
+        False-> Test
+        True->  Training
         """
         if convert:
-            results = [(np.argmax(self.feedforward(x)), np.argmax(y))
-                       for (x, y) in data]
+            results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in data]
         else:
-            results = [(np.argmax(self.feedforward(x)), y)
-                        for (x, y) in data]
+            results = [(np.argmax(self.feedforward(x)), y) for (x, y) in data]
 
         result_accuracy = sum(int(x == y) for (x, y) in results)
+
         return result_accuracy
 
     def total_cost(self, data, lmbda, convert=False):
@@ -313,11 +312,14 @@ class Network(object):
         training data (the usual case), and to True if the data set is
         the validation or test data.  See comments on the similar (but
         reversed) convention for the ``accuracy`` method, above.
+        False-> Training
+        True->  Test
         """
         cost = 0.0
         for x, y in data:
             a = self.feedforward(x)
-            if convert: y = vectorized_result(y)
+            if convert: 
+                y = vectorized_result(y)
             cost += self.cost.fn(a, y)/len(data)
             cost += 0.5*(lmbda/len(data))*sum(np.linalg.norm(w)**2 for w in self.weights) # '**' - to the power of.
         return cost

@@ -78,7 +78,7 @@ class Network(object):
         self.cols = sizes[:-1]
         self.cost = cost
         self.default_weight_initializer()
-
+    
     def default_weight_initializer(self):
         """Initialize each weight using a Gaussian distribution with mean 0
         and standard deviation 1 over the square root of the number of
@@ -95,7 +95,6 @@ class Network(object):
         self.biases  = [np.random.randn(r,1) for r in self.rows ]
         self.weights = [np.random.randn(r,c) for r, c in zip(self.rows,self.cols)]
 
- 
     def feedForward(self,a):
         """Return the output of the network if ``a`` is input"""
         
@@ -104,7 +103,6 @@ class Network(object):
             a = sigmoid( w@a + b)
             
         return a
-
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
             lmbda = 0.0,
@@ -177,7 +175,7 @@ class Network(object):
             if monitor_evaluation_accuracy:
                 accuracy = self.accuracy(evaluation_data)
                 evaluation_accuracy.append(accuracy)
-                print("Accuracy on evaluation data: {} / {}".format(self.accuracy(evaluation_data), n_data),end='\n\n')
+                print("Accuracy on evaluation data: {} / {}".format(accuracy, n_data),end='\n\n')
 
             # Early stopping:
             if early_stopping_n > 0:
@@ -205,7 +203,7 @@ class Network(object):
         """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
-        m = len(mini_batch)
+        m       = len(mini_batch)
         for x, y in mini_batch:
             
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
@@ -297,15 +295,15 @@ class Network(object):
             a = self.feedForward(x)
             if convert: y = vectorized_result(y)
             cost += self.cost.fn(a, y)/len(data)
-            cost += 0.5*(lmbda/len(data))*sum(np.linalg.norm(w)**2 for w in self.weights) # '**' - to the power of.
+            cost += 0.5*(lmbda/len(data))*np.sum( [np.linalg.norm(w)**2 for w in self.weights] ) # '**' - to the power of.
         return cost
 
     def save(self, filename):
         """Save the neural network to the file ``filename``."""
-        data = {"sizes": self.sizes,
+        data = {"sizes"  : self.sizes,
                 "weights": [w.tolist() for w in self.weights],
-                "biases":  [b.tolist() for b in self.biases],
-                "cost": str(self.cost.__name__)}
+                "biases" : [b.tolist() for b in self.biases ],
+                "cost"   : str(self.cost.__name__)}
         f = open(filename, "w")
         json.dump(data, f)
         f.close()
@@ -318,10 +316,11 @@ def load(filename):
     f = open(filename, "r")
     data = json.load(f)
     f.close()
-    cost = getattr(sys.modules[__name__], data["cost"])
-    net  = Network(data["sizes"], cost=cost)
+    cost        = getattr(sys.modules[__name__], data["cost"])
+    net         = Network(data["sizes"], cost=cost)
     net.weights = [np.array(w) for w in data["weights"]]
-    net.biases = [np.array(b) for b in data["biases"]]
+    net.biases  = [np.array(b) for b in data["biases"]]
+    
     return net
 
 #### Miscellaneous functions

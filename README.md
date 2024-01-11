@@ -113,7 +113,6 @@ $$
 <img src="MatlabScripts/imgs/netBackProp.png"  width="100%">
 
 
-
 ## *Binary cross entropy cost function: Avoid slow training*
 
 $$ a=a^L =\sigma(z^L) 
@@ -150,9 +149,10 @@ $$
 ## *Logistic Regression and Binary Cross Entropy Cost*
 
 - Entropy: $H(p)$
-- Cross Entropy: $H(p,q)$
-$$
 
+- Cross Entropy: $H(p,q)$
+
+$$
 \begin{align} 
   &  H(p) = -\sum_x p(x) \log(p(x))  \\
   &                                  \\
