@@ -1,4 +1,4 @@
-
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -102,5 +102,12 @@ axs[2].set_ylim(ylims)
 axs[2].legend()
 
 
-plt.savefig('imgs/regularization.png',dpi=100)
+#plt.savefig('imgs/regularization.png',dpi=100)
 plt.show()
+
+
+def fun_ab(a,b): return a**2+b**2
+
+txt = getattr(sys.modules[__name__], 'fun_ab')
+
+k = txt

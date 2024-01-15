@@ -280,6 +280,65 @@ weights = [np.random.randn(r,c)/np.sqrt(c) for r,c in zip(rows,cols)]
 ### Normalized
 <img src="PythonScripts/Examples/imgs/weights_randn_normalize.png"  width="100%">
 
+## Recognize handwritten digits from  MNIST dataset
+
+### Parts of the data set
+
+``` python
+# training_data = [(x1,y1),(x2,y2)...(xn,yn)]
+# len = 50000
+# xi  = array(784,1)
+# yi  = array(10,1)
+
+# test_data = [(x1,y1),(x2,y2)...(xn,yn)]
+# len = 10000 
+# xi  = array(784,1)
+# yi  = number 0,1,2...9
+
+# validation_data = [(x1,y1),(x2,y2)...(xn,yn)]
+# len = 10000 
+# xi  = array(784,1)
+# yi  = number 0,1,2...9
+```
+
+### Net output
+``` python
+n    = 100
+x, y = training_data[n]
+a    = net.feedforward(x)
+
+# a: Net output
+# array([[2.26639888e-03],
+#        [3.91142856e-04],
+#        [4.30652386e-05],
+#        [2.98756664e-06],
+#        [3.88572904e-04],
+#        [9.06726417e-01], Digit 5
+#        [1.95308412e-02],
+#        [6.02094721e-06],
+#        [8.41020120e-02],
+#        [3.07447887e-02]])
+
+# y: Desire output
+# array([[0.],
+#        [0.],
+#        [0.],
+#        [0.],
+#        [0.],
+#        [1.], Digit 5
+#        [0.],
+#        [0.],
+#        [0.],
+#        [0.]])
+``` 
+
+### Examples with cost
+
+<img src="PythonScripts/Examples/imgs_output_net/img1.png"  width="100%">
+<img src="PythonScripts/Examples/imgs_output_net/img2.png"  width="100%">
+<img src="PythonScripts/Examples/imgs_output_net/img3.png"  width="100%">
+
+
 ## *References*
 [Computational Graphs](http://colah.github.io/posts/2015-08-Backprop/)
 
