@@ -52,23 +52,25 @@ fig, ax = plt.subplots(1,2, constrained_layout=True,figsize=(1000*px2inch , 450*
 z     = np.linspace(-4,4)
 a     = sigmoid(z)
 
-y     = 0
-mse   = quadratic_cost(sigmoid(z),y)
-bce   = cross_entropy( sigmoid(z),y)
-d_mse = delta_mse(z,a,y)
-d_bce = delta_bce(z,a,y)
-ax[y].plot(z,sigmoid(z),label='$a=\sigma(z)$');ax[y].plot(z,mse,label='$MSE _ cost$');ax[y].plot(z,bce,label='$BCE _ cost$')
-ax[y].plot(z,d_mse,label='$\delta^L MSE $'); ax[y].plot(z,d_bce,label='$\delta^L _ BCE$');
-ax[y].set_title(f'Desire y = {y}');ax[y].set_xlabel('z');ax[y].legend();
-
 y     = 1
 mse   = quadratic_cost(sigmoid(z),y)
 bce   = cross_entropy( sigmoid(z),y)
 d_mse = delta_mse(z,a,y)
 d_bce = delta_bce(z,a,y)
-ax[y].plot(z,sigmoid(z),label='$a=\sigma(z)$');ax[y].plot(z,mse,label='$MSE _ cost$');ax[y].plot(z,bce,label='$BCE _ cost$')
-ax[y].plot(z,d_mse,label='$\delta^L MSE $'); ax[y].plot(z,d_bce,label='$\delta^L _ BCE$');
-ax[y].set_title(f'Desire y = {y}');ax[y].set_xlabel('z');ax[y].legend();
+ax[0].plot(z,sigmoid(z),label='$a=\sigma(z)$');ax[0].plot(z,mse,label='$MSE _ cost$');ax[0].plot(z,bce,label='$BCE _ cost$')
+ax[0].plot(z,d_mse,label='$\delta^L MSE $');   ax[0].plot(z,d_bce,label='$\delta^L _ BCE$');
+ax[0].set_title(f'Desire y = {y}');            ax[0].set_xlabel('z');ax[0].legend();
+ax[0].set_ylim(-1,4)
+
+y     = 0
+mse   = quadratic_cost(sigmoid(z),y)
+bce   = cross_entropy( sigmoid(z),y)
+d_mse = delta_mse(z,a,y)
+d_bce = delta_bce(z,a,y)
+ax[1].plot(z,sigmoid(z),label='$a=\sigma(z)$'); ax[1].plot(z,mse,label='$MSE _ cost$');ax[1].plot(z,bce,label='$BCE _ cost$')
+ax[1].plot(z,d_mse,label='$\delta^L MSE $');    ax[1].plot(z,d_bce,label='$\delta^L _ BCE$');
+ax[1].set_title(f'Desire y = {y}');             ax[1].set_xlabel('z');ax[1].legend();
+ax[1].set_ylim(-1,4)
 
 fig.savefig('imgs/DeltaError.png', dpi=200)
 

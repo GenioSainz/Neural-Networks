@@ -161,6 +161,7 @@ $$
 $$
 
 <img src="PythonScripts/Examples/imgs/b_c_e.png"  width="100%">
+<img src="PythonScripts/Examples/imgs/b_c_e2.png"  width="100%">
 
 ## Softmax
 
@@ -280,6 +281,13 @@ weights = [np.random.randn(r,c)/np.sqrt(c) for r,c in zip(rows,cols)]
 ### Normalized
 <img src="PythonScripts/Examples/imgs/weights_randn_normalize.png"  width="100%">
 
+## Choose a neural network's hyper-parameters
+
+- Reduce the number of classes and the test data
+- Decreasing training cost $\eta$: 0.1, 1.0, 2.5, 5
+- Validation accuracy: $\lambda$, $m$, $Nº$ $HiddenNeurons$
+- Early stopping to determine the number of training epochs: (Compute the classification accuracy on the validation data at the end of each epoch). Terminate training if the best classification accuracy doesn't improve for quite some nº of epochs
+
 ## Recognize handwritten digits from  MNIST dataset
 
 ### Parts of the data set
@@ -337,6 +345,14 @@ a    = net.feedforward(x)
 <img src="PythonScripts/Examples/imgs_output_net/img1.png"  width="100%">
 <img src="PythonScripts/Examples/imgs_output_net/img2.png"  width="100%">
 <img src="PythonScripts/Examples/imgs_output_net/img3.png"  width="100%">
+
+<!-- $$
+\begin{align}
+ v & \leftarrow \alpha v + \eta \nabla_w C \\
+                                          \\
+w & \leftarrow w + v
+\end{align}
+$$ -->
 
 
 ## *References*

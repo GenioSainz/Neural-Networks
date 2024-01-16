@@ -112,10 +112,10 @@ def get_gauss_curve(u=0,s=1,ns=4):
 
     return x_pdf,y_pdf
 
-fig2, ax2 = plt.subplots(1,1,constrained_layout=True,figsize=((900*px2inch,600*px2inch)));
+fig2, ax2 = plt.subplots(1,1,constrained_layout=True,figsize=((800*px2inch,600*px2inch)));
 u = 0
-t = ['weights randn/sqrt(n) ',
-     'weights randn             ']
+t = ['weights randn/sqrt(n)\n',
+     'weights randn\n']
 
                                     #[1.22,np.sqrt(51)]
 for i,(s ,ns, ti) in enumerate( zip([2,81],[12,3],t) ):
@@ -128,6 +128,6 @@ ax2.legend(loc='upper right')
 ax2.set_xlabel('$z = \sum w_j x_j + b$')
 ax2.set_title('Gaussian Random WeightSum Z Distribution' )
 
-#fig2.savefig('imgs/weight_distribution.png', dpi=150)
+fig2.savefig('imgs/weight_distribution.png', dpi=150)
 
 plt.show()
