@@ -30,6 +30,14 @@ $\frac{\partial{Z}}{\partial{X}} \rightarrow$ Sum over all possible paths betwee
 <!-- <img src="MatlabScripts/imgs/net535_1.png"  width="100%"> -->
 <!-- <img src="MatlabScripts/imgs/net535_2.png"  width="100%"> -->
 
+## Activation functions
+
+<img src="PythonScripts\Examples\imgs\activations_functions.png"  width="100%">
+
+Tanh improves sigmoid function because with sigmoid all the weights of the same neuron must increase or decrease together as the activations will always be positive and the sign will depend on the error associated with the neuron. With Tanh the activations in the hidden layers would be equally balanced between positive and negative values.
+
+$$ \frac{\partial C}{\partial W^l} = \delta^l [a^{l-1}]^T $$
+
 
 ## *Feed forward activations: Single Neuron*
 
@@ -354,6 +362,27 @@ w & \leftarrow w + v
 \end{align}
 $$ -->
 
+## Classification of 2D points in circular and elliptical geometries
+
+### Spirals
+<img src="PythonScripts\Geometric_Classification\imgs\spiral_ufxqX.png" width="100%">
+
+### Circles
+<img src="PythonScripts\Geometric_Classification\imgs\circles_g5q7e.png" width="100%">
+
+
+### Animation
+
+These animations show the ability of a Neural Network to transform the space in a non-linear way to create regions that allow to delimit and classify the input data. The colour gradient represents the normalised output of the network (first row) and the discrete colours represent the different classification regions (second row).
+
+The first animation represents the evaluation of the network during the training process. The second one represents the evaluation after being trained, keeping the same architecture, hyperparameters, training data but different initialisations of weights.
+
+
+<hr>
+<img src="PythonScripts\Geometric_Classification\imgs\animation_epoch_6.gif" width="100%">
+<hr>
+<img src="PythonScripts\Geometric_Classification\imgs\animation_final_5.gif" width="100%">
+
 
 ## *References*
 [Computational Graphs](http://colah.github.io/posts/2015-08-Backprop/)
@@ -369,5 +398,8 @@ $$ -->
 [Backpropagation calculus](https://www.3blue1brown.com/lessons/backpropagation-calculus)
 
 [Binary-Cross-Entropy](https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a)
+
+
+
 
 

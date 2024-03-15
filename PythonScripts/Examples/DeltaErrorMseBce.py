@@ -49,6 +49,7 @@ def delta_bce(z,a,y):    return (a-y)
 plt.close('all')
 fig, ax = plt.subplots(1,2, constrained_layout=True,figsize=(1000*px2inch , 450*px2inch))
 
+kr = 3
 z     = np.linspace(-4,4)
 a     = sigmoid(z)
 

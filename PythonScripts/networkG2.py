@@ -233,7 +233,7 @@ class Network(object):
             activations.append(activation)
             
         # backward pass
-        delta = (self.cost).delta(zs[-1], activations[-1], y)
+        delta       = (self.cost).delta(zs[-1], activations[-1], y)
         nabla_b[-1] = delta
         nabla_w[-1] = delta@activations[-2].T
         
