@@ -350,9 +350,9 @@ a    = net.feedforward(x)
 
 ### Examples with cost
 
-<img src="PythonScripts/Examples/imgs_output_net/img1.png"  width="100%">
-<img src="PythonScripts/Examples/imgs_output_net/img2.png"  width="100%">
-<img src="PythonScripts/Examples/imgs_output_net/img3.png"  width="100%">
+<img src="PythonScripts/Examples/imgs_output_net/img1.png"  width="90%">
+<img src="PythonScripts/Examples/imgs_output_net/img2.png"  width="90%">
+<img src="PythonScripts/Examples/imgs_output_net/img3.png"  width="90%">
 
 <!-- $$
 \begin{align}
@@ -362,16 +362,16 @@ w & \leftarrow w + v
 \end{align}
 $$ -->
 
-## Classification of 2D points in circular and elliptical geometries
+## 2D point classification in circular and spiral geometries
 
 ### Spirals
-<img src="PythonScripts\Geometric_Classification\imgs\spiral_ufxqX.png" width="100%">
+<img src="PythonScripts\Geometric_Classification\imgs\spiral_ufxqX.png" width="90%">
 
 ### Circles
-<img src="PythonScripts\Geometric_Classification\imgs\circles_g5q7e.png" width="100%">
+<img src="PythonScripts\Geometric_Classification\imgs\circles_g5q7E.png" width="90%">
 
 
-### Animation
+### Animations
 
 These animations show the ability of a Neural Network to transform the space in a non-linear way to create regions that allow to delimit and classify the input data. The colour gradient represents the normalised output of the network (first row) and the discrete colours represent the different classification regions (second row).
 
@@ -379,9 +379,9 @@ The first animation represents the evaluation of the network during the training
 
 
 <hr>
-<img src="PythonScripts\Geometric_Classification\imgs\animation_epoch_6.gif" width="100%">
+<img src="PythonScripts\Geometric_Classification\imgs\animation_epoch_6.gif" width="90%">
 <hr>
-<img src="PythonScripts\Geometric_Classification\imgs\animation_final_5.gif" width="100%">
+<img src="PythonScripts\Geometric_Classification\imgs\animation_final_5.gif" width="90%">
 
 
 ## *References*
